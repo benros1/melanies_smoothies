@@ -1,4 +1,6 @@
 # Import python packages
+import pandas as pd
+import requests
 import streamlit as st
 from snowflake.snowpark.functions import col
 
@@ -33,6 +35,8 @@ ingredients_list = st.multiselect(
 if ingredients_list:
     ingredients_string = ''
     for fruit_chosen in ingredients_list:
+        fruity_response = requests.get(f"https://fruityvice.com/api/fruit/{fruit_chosen}")
+        fv_df = st.dataframe(data=fruity_responce.json(), use_container_width=True)
         ingredients_string += fruit_chosen + ' '
 
     st.write(ingredients_string)
